@@ -5,5 +5,5 @@ than it was fixed by Kevin Olson (https://github.com/justinrainbow/php-doc.vim):
 - fixed bugs w/ parameters not finding booleans
 - added folding marker comment functionality
 
-and finally I decicded to remove vim folding markers and clean the code a bit.
+and finally I decicded to remove vim folding markers and clean the code a bit removing functionality i will not be using
 

@@ -89,7 +89,6 @@ let g:pdv_cfg_CommentEnd = "// }" . "}" . "}"
 let g:pdv_cfg_Type = "mixed"
 let g:pdv_cfg_Package = ""
 let g:pdv_cfg_Version = "$id$"
-let g:pdv_cfg_Author = "kevin olson <acidjazz@gmail.com>"
 let g:pdv_cfg_Copyright = "2006-2009 FanIQ"
 let g:pdv_cfg_License = "PHP Version 5.2 {@link http://www.php.net/license/}"
 

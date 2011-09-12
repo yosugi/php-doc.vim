@@ -103,23 +103,12 @@ let g:pdv_cfg_paste = 1
 
 " Wether for PHP5 code PHP4 tags should be set, like @access,... (1|0)?
 let g:pdv_cfg_php4always = 1
- 
-" Wether to guess scopes after PEAR coding standards:
-" $_foo/_bar() == <private|protected> (1|0)?
-let g:pdv_cfg_php4guess = 1
 
-" If you selected 1 for the last value, this scope identifier will be used for
-" the identifiers having an _ in the first place.
-let g:pdv_cfg_php4guessval = "protected"
-
-"
 " Regular expressions 
 " 
 
 let g:pdv_re_comment = ' *\*/ *'
 
-" (private|protected|public)
-let g:pdv_re_scope = '\(private\|protected\|public\)'
 " (static)
 let g:pdv_re_static = '\(static\)'
 " (abstract)
@@ -231,7 +220,6 @@ func! PhpDocFunc()
 	let l:parameters = substitute (l:name, g:pdv_re_func, '\3', "g") . ","
 	let l:params = substitute (l:name, g:pdv_re_func, '\3', "g") 
 	let l:sparams = substitute (l:params, '[$  ]', '', "g")
-	let l:scope = PhpDocScope(l:modifier, l:funcname)
 	let l:static = g:pdv_cfg_php4always == 1 ? matchstr(l:modifier, g:pdv_re_static) : ""
 	let l:abstract = g:pdv_cfg_php4always == 1 ? matchstr(l:modifier, g:pdv_re_abstract) : ""
 	let l:final = g:pdv_cfg_php4always == 1 ? matchstr(l:modifier, g:pdv_re_final) : ""
@@ -277,9 +265,6 @@ func! PhpDocFunc()
 	if l:final != ""
 		exe l:txtBOL . g:pdv_cfg_Commentn . "@final" . g:pdv_cfg_EOL
 	endif
-	if l:scope != ""
-		exe l:txtBOL . g:pdv_cfg_Commentn . "@access " . l:scope . g:pdv_cfg_EOL
-	endif
 	exe l:txtBOL . g:pdv_cfg_Commentn . "@return " . g:pdv_cfg_ReturnVal . g:pdv_cfg_EOL
 	exe l:txtBOL . g:pdv_cfg_Commentn . "@author " . g:pdv_cfg_Author . g:pdv_cfg_EOL
 
@@ -306,7 +291,6 @@ func! PhpDocVar()
 	let l:modifier = substitute (l:name, g:pdv_re_attribute, '\1', "g")
 	let l:varname = substitute (l:name, g:pdv_re_attribute, '\3', "g")
 	let l:default = substitute (l:name, g:pdv_re_attribute, '\4', "g")
-	let l:scope = PhpDocScope(l:modifier, l:varname)
 
 	let l:static = g:pdv_cfg_php4always == 1 ? matchstr(l:modifier, g:pdv_re_static) : ""
 
@@ -324,9 +308,6 @@ func! PhpDocVar()
 		exe l:txtBOL . g:pdv_cfg_Commentn . "@static" . g:pdv_cfg_EOL
 	endif
 	exe l:txtBOL . g:pdv_cfg_Commentn . "@var " . l:type . g:pdv_cfg_EOL
-	if l:scope != ""
-		exe l:txtBOL . g:pdv_cfg_Commentn . "@access " . l:scope . g:pdv_cfg_EOL
-	endif
 	
 	" Close the comment block.
 	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
@@ -393,27 +374,6 @@ func! PhpDocClass()
 	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
 	return l:modifier ." ". l:classname
 endfunc
-
-
-func! PhpDocScope(modifiers, identifier)
-	let l:scope  = ""
-	if  matchstr (a:modifiers, g:pdv_re_scope) != "" 
-		if g:pdv_cfg_php4always == 1
-			let l:scope = matchstr (a:modifiers, g:pdv_re_scope)
-		else
-			let l:scope = "x"
-		endif
-	endif
-	if l:scope =~ "^\s*$" && g:pdv_cfg_php4guess
-		if a:identifier[0] == "_"
-			let l:scope = g:pdv_cfg_php4guessval
-		else
-			let l:scope = "public"
-		endif
-	endif
-	return l:scope != "x" ? l:scope : ""
-endfunc
-
 
 func! PhpDocType(typeString)
 	let l:type = ""

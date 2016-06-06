@@ -137,8 +137,10 @@ let g:pdv_re_bool = "[true false]"
 let g:pdv_re_indent = '^\s*'
 
 " Shortcuts for editing the text:
-let g:pdv_cfg_BOL = "norm! o"
-let g:pdv_cfg_EOL = ""
+"let g:pdv_cfg_BOL = "norm! o"
+"let g:pdv_cfg_EOL = ""
+let g:pdv_cfg_BOL = "norm! :setlocal paste\<CR>o"
+let g:pdv_cfg_EOL = "\<ESC>"
 
 
 " Functions
@@ -266,7 +268,7 @@ func! PhpDocFunc()
 		exe l:txtBOL . g:pdv_cfg_Commentn . "@final" . g:pdv_cfg_EOL
 	endif
 	exe l:txtBOL . g:pdv_cfg_Commentn . "@return " . g:pdv_cfg_ReturnVal . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@author " . g:pdv_cfg_Author . g:pdv_cfg_EOL
+"	exe l:txtBOL . g:pdv_cfg_Commentn . "@author " . g:pdv_cfg_Author . g:pdv_cfg_EOL
 
 	" Close the comment block.
 	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
@@ -364,11 +366,11 @@ func! PhpDocClass()
 	if l:final != ""
 		exe l:txtBOL . g:pdv_cfg_Commentn . "@final" . g:pdv_cfg_EOL
 	endif
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@package " . g:pdv_cfg_Package . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@version " . g:pdv_cfg_Version . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@copyright " . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@author " . g:pdv_cfg_Author g:pdv_cfg_EOL
-	exe l:txtBOL . g:pdv_cfg_Commentn . "@license " . g:pdv_cfg_License . g:pdv_cfg_EOL
+"	exe l:txtBOL . g:pdv_cfg_Commentn . "@package " . g:pdv_cfg_Package . g:pdv_cfg_EOL
+"	exe l:txtBOL . g:pdv_cfg_Commentn . "@version " . g:pdv_cfg_Version . g:pdv_cfg_EOL
+"	exe l:txtBOL . g:pdv_cfg_Commentn . "@copyright " . g:pdv_cfg_Copyright . g:pdv_cfg_EOL
+"	exe l:txtBOL . g:pdv_cfg_Commentn . "@author " . g:pdv_cfg_Author g:pdv_cfg_EOL
+"	exe l:txtBOL . g:pdv_cfg_Commentn . "@license " . g:pdv_cfg_License . g:pdv_cfg_EOL
 
 	" Close the comment block.
 	exe l:txtBOL . g:pdv_cfg_CommentTail . g:pdv_cfg_EOL
